@@ -25,10 +25,6 @@ let initialCards = [
   ],
 ];
 
-initialCards.forEach((element) => {
-  console.log(element[0]);
-});
-
 const profileSection = document.querySelector(".profile");
 const editProfileButton = profileSection.querySelector(".profile__edit-button");
 const editProfileModal = document.querySelector("#edit-popup");
@@ -79,3 +75,31 @@ function handleProfileFormSubmit(evt) {
   description.textContent = descriptionInput.value;
   closeModal(editProfileModal);
 }
+
+function getCardElement(
+  title = "Sin título",
+  image = "./iamges/placeholder.jpg",
+) {
+  const cardTemplate = document.querySelector("#card__template");
+  const cardElement = cardTemplate.content
+    .querySelector(".card")
+    .cloneNode(true);
+
+  const elementImage = cardElement.querySelector(".card__image");
+  elementImage.src = image;
+
+  const elementTitle = cardElement.querySelector(".card__title");
+  elementTitle.textContent = title;
+  return cardElement;
+}
+
+function renderCard() {
+  const container = document.querySelector(".cards__list");
+
+  initialCards.forEach((card) => {
+    const cardElement = getCardElement(card[0], card[1]);
+    container.appendChild(cardElement);
+  });
+}
+
+renderCard();
