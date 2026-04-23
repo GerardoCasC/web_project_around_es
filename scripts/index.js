@@ -89,6 +89,7 @@ function openModal(modal) {
 function closeModal(modal) {
   modal.classList.remove("popup_is-opened");
 }
+
 // OPEN IMAGE-MODAL
 function handleOpenImageModal(image) {
   openModal(imageModal);
@@ -155,7 +156,7 @@ closeAddCardButton.addEventListener("click", () => closeModal(addCardModal));
 closeAddCardButton.removeEventListener("click", () => closeModal(addCardModal));
 
 // SUBMIT ADD-CARD MODAL
-addCardForm.addEventListener("submit", () => handleCardFormSubmit);
+addCardForm.addEventListener("submit", handleCardFormSubmit);
 
 function handleCardFormSubmit(evt) {
   evt.preventDefault();
