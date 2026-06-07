@@ -12,15 +12,15 @@ export class FormValidator {
     this.config = defaultFormConfig;
   }
 
-  private _formValidation(input: HTMLInputElement) {
+  private formValidation(input: HTMLInputElement) {
     if (!input.validity.valid) {
-      this._showInputError(input, input.validationMessage);
+      this.showInputError(input, input.validationMessage);
     } else {
-      this._hideInputError(input);
+      this.hideInputError(input);
     }
-    this._toggleButtonState();
+    this.toggleButtonState();
   }
-  private _toggleButtonState() {
+  private toggleButtonState() {
     const submitButton = this.formElement.querySelector(
       this.config.submitButtonSelector,
     ) as HTMLButtonElement;
@@ -37,17 +37,17 @@ export class FormValidator {
       submitButton.disabled = false;
     }
   }
-  private _setEventListeners() {
+  private setEventListeners() {
     const inputs = this.formElement.querySelectorAll(
       this.config.inputSelector,
     ) as NodeListOf<HTMLInputElement>;
     inputs.forEach((input) => {
       input.addEventListener("input", () => {
-        this._formValidation(input);
+        this.formValidation(input);
       });
     });
   }
-  private _showInputError(input: HTMLInputElement, errorMessage: string) {
+  private showInputError(input: HTMLInputElement, errorMessage: string) {
     const errorElement = this.formElement.querySelector(
       `.${input.name}-input-error`,
     ) as HTMLInputElement;
@@ -55,7 +55,7 @@ export class FormValidator {
     errorElement.textContent = errorMessage;
     errorElement.classList.add(this.config.errorClass);
   }
-  private _hideInputError(input: HTMLInputElement) {
+  private hideInputError(input: HTMLInputElement) {
     const errorElement = this.formElement.querySelector(
       `.${input.name}-input-error`,
     ) as HTMLInputElement;
@@ -64,14 +64,14 @@ export class FormValidator {
     errorElement.classList.remove("popup__input-error_active");
   }
   public enableValidation() {
-    this._setEventListeners();
+    this.setEventListeners();
   }
   public resetValidation() {
     const inputs = this.formElement.querySelectorAll(
       this.config.inputSelector,
     ) as NodeListOf<HTMLInputElement>;
     inputs.forEach((input) => {
-      this._hideInputError(input);
+      this.hideInputError(input);
     });
   }
 }
