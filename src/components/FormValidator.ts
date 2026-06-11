@@ -1,11 +1,11 @@
-import type { defaultFormConfig } from "../utils/constants.js";
+import type { DefaultFormConfig } from "../utils/constants.js";
 
 export class FormValidator {
-  private config: defaultFormConfig;
+  private config: DefaultFormConfig;
   private formElement: HTMLFormElement;
 
   constructor(
-    defaultFormConfig: defaultFormConfig,
+    defaultFormConfig: DefaultFormConfig,
     HTMLformElement: HTMLFormElement,
   ) {
     this.formElement = HTMLformElement;

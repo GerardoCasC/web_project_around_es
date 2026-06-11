@@ -1,12 +1,16 @@
 export class Popup {
-  private modal: HTMLElement;
+  protected modal: HTMLElement;
+  private closeButton: HTMLButtonElement;
   constructor(popupSelector: string) {
     this.modal = document.querySelector(popupSelector) as HTMLElement;
     this.handleEscClose = this.handleEscClose.bind(this);
     this.handleOverlayClose = this.handleOverlayClose.bind(this);
     this.close = this.close.bind(this);
+    this.closeButton = this.modal.querySelector(
+      ".popup__close",
+    ) as HTMLButtonElement;
   }
-  private handleEscClose(evt: KeyboardEvent) {
+  protected handleEscClose(evt: KeyboardEvent) {
     if (
       evt.key === "Escape" &&
       this.modal.classList.contains("popup_is-opened")
@@ -14,26 +18,18 @@ export class Popup {
       this.close();
     }
   }
-  private handleOverlayClose(evt: MouseEvent) {
+  protected handleOverlayClose(evt: MouseEvent) {
     if (evt.target === this.modal) {
       this.close();
     }
   }
   public setEventListeners() {
-    const closeImageModalButton = this.modal.querySelector(
-      ".popup__close",
-    ) as HTMLButtonElement;
-
-    closeImageModalButton.addEventListener("click", this.close);
+    this.closeButton.addEventListener("click", this.close);
     this.modal.addEventListener("click", this.handleOverlayClose);
     window.addEventListener("keydown", this.handleEscClose);
   }
-  private removeEventListeners() {
-    const closeImageModalButton = this.modal.querySelector(
-      ".popup__close",
-    ) as HTMLButtonElement;
-
-    closeImageModalButton.removeEventListener("click", this.close);
+  protected removeEventListeners() {
+    this.closeButton.addEventListener("click", this.close);
     this.modal.removeEventListener("click", this.handleOverlayClose);
     window.removeEventListener("keydown", this.handleEscClose);
   }

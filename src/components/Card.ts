@@ -4,11 +4,20 @@ export class Card {
   private data: CardData;
   private selector: string;
   private element!: HTMLElement;
-  private handleCardClick: () => void;
+  private elementImage: HTMLImageElement;
+  private handleCardClick: (title: string, image: string) => void;
 
-  constructor(data: CardData, selector: string, handleCardClick: () => void) {
+  constructor(
+    data: CardData,
+    selector: string,
+    handleCardClick: (title: string, image: string) => void,
+  ) {
     this.data = data;
     this.selector = selector;
+    this.element = this.getTemplate();
+    this.elementImage = this.element.querySelector(
+      ".card__image",
+    ) as HTMLImageElement;
     this.handleCardClick = handleCardClick;
   }
   protected getTemplate(): HTMLElement {
@@ -22,17 +31,15 @@ export class Card {
     return cardElement;
   }
   public generateCard() {
-    this.element = this.getTemplate();
-    const elementImage = this.element.querySelector(
-      ".card__image",
-    ) as HTMLImageElement;
-    elementImage.src = this.data.image;
-    elementImage.alt = this.data.image;
+    console.log(this.elementImage + "ELEMENTO");
+    console.log(this.data.link + "DATA");
+    this.elementImage.src = this.data.link;
+    this.elementImage.alt = this.data.link;
 
     const elementTitle = this.element.querySelector(
       ".card__title",
     ) as HTMLElement;
-    elementTitle.textContent = this.data.title;
+    elementTitle.textContent = this.data["place-name"];
     this.setEventListeners();
     return this.element;
   }
@@ -52,6 +59,8 @@ export class Card {
       this.element.remove();
     });
 
-    this.element.addEventListener("click", this.handleCardClick);
+    this.elementImage.addEventListener("click", () => {
+      this.handleCardClick(this.data["place-name"], this.data.link);
+    });
   }
 }

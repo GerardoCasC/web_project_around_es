@@ -1,4 +1,13 @@
 export interface CardData {
-  image: string;
-  title: string;
+  "place-name": string;
+  link: string;
+}
+
+export interface FormEditValues {
+  name: string;
+  description: string;
+}
+export interface UserInfoData {
+  nameSelector: string;
+  descriptionSelector: string;
 }

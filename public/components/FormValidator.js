@@ -3,16 +3,16 @@ export class FormValidator {
         this.formElement = HTMLformElement;
         this.config = defaultFormConfig;
     }
-    _formValidation(input) {
+    formValidation(input) {
         if (!input.validity.valid) {
-            this._showInputError(input, input.validationMessage);
+            this.showInputError(input, input.validationMessage);
         }
         else {
-            this._hideInputError(input);
+            this.hideInputError(input);
         }
-        this._toggleButtonState();
+        this.toggleButtonState();
     }
-    _toggleButtonState() {
+    toggleButtonState() {
         const submitButton = this.formElement.querySelector(this.config.submitButtonSelector);
         const inputs = this.formElement.querySelectorAll(this.config.inputSelector);
         const allValid = Array.from(inputs).every((input) => input.validity.valid);
@@ -25,33 +25,33 @@ export class FormValidator {
             submitButton.disabled = false;
         }
     }
-    _setEventListeners() {
+    setEventListeners() {
         const inputs = this.formElement.querySelectorAll(this.config.inputSelector);
         inputs.forEach((input) => {
             input.addEventListener("input", () => {
-                this._formValidation(input);
+                this.formValidation(input);
             });
         });
     }
-    _showInputError(input, errorMessage) {
+    showInputError(input, errorMessage) {
         const errorElement = this.formElement.querySelector(`.${input.name}-input-error`);
         input.classList.add(this.config.inputErrorClass);
         errorElement.textContent = errorMessage;
         errorElement.classList.add(this.config.errorClass);
     }
-    _hideInputError(input) {
+    hideInputError(input) {
         const errorElement = this.formElement.querySelector(`.${input.name}-input-error`);
         input.classList.remove(this.config.inputErrorClass);
         errorElement.textContent = "";
         errorElement.classList.remove("popup__input-error_active");
     }
     enableValidation() {
-        this._setEventListeners();
+        this.setEventListeners();
     }
     resetValidation() {
         const inputs = this.formElement.querySelectorAll(this.config.inputSelector);
         inputs.forEach((input) => {
-            this._hideInputError(input);
+            this.hideInputError(input);
         });
     }
 }
